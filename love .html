@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>forr azariaa putrii keihann 💗</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff9ecf,#9ad0ff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* CARD */
+.card{
+    background:#fff;
+    padding:35px;
+    border-radius:24px;
+    width:360px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+    position:relative;
+    z-index:2;
+    animation:cardIn 1s ease forwards;
+}
+@keyframes cardIn{
+    from{opacity:0; transform:scale(.9)}
+    to{opacity:1; transform:scale(1)}
+}
+
+h2{ color:#ff4f9a; margin-bottom:6px; }
+p{ font-size:14px; color:#555; }
+
+/* BUTTON */
+button{
+    margin-top:15px;
+    background:linear-gradient(135deg,#ff5fa2,#6fb7ff);
+    color:#fff;
+    border:none;
+    padding:12px 26px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:14px;
+    transition:.4s;
+}
+
+button.hide{
+    opacity:0;
+    transform:scale(.7);
+    pointer-events:none;
+}
+
+/* PESAN */
+#pesan{
+    margin-top:20px;
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre-line;
+    display:none;
+    color:#444;
+}
+
+.cursor{ animation:blink 1s infinite; }
+@keyframes blink{
+    0%,50%{opacity:1}
+    51%,100%{opacity:0}
+}
+
+/* SIGNATURE */
+.signature{
+    margin-top:16px;
+    font-style:italic;
+    color:#ff5fa2;
+    opacity:0;
+    transition:opacity 1.5s;
+}
+
+/* FOTO */
+.photos{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+}
+
+.photos img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:50%;
+    box-shadow:0 6px 14px rgba(0,0,0,.25);
+    opacity:0;
+    transform:scale(.7);
+}
+
+.photos img.show{
+    opacity:1;
+    animation:pop .6s ease forwards, float 3s ease-in-out infinite;
+}
+
+@keyframes pop{ to{ transform:scale(1); } }
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+    100%{transform:translateY(0)}
+}
+
+/* LOVE & TULIP */
+.falling{
+    position:fixed;
+    top:-20px;
+    font-size:18px;
+    animation:fall linear forwards;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* SPARKLE HALUS */
+.sparkle{
+    position:fixed;
+    width:6px;
+    height:6px;
+    background:#fff;
+    border-radius:50%;
+    opacity:.6;
+    animation:spark 2s ease-out forwards;
+}
+
+@keyframes spark{
+    to{
+        transform:translateY(-60px) scale(0);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIK -->
+<audio id="music" src="music.mp3" loop></audio>
+
+<div class="card">
+    <h2>haiii azaaaa 🤍</h2>
+    <p>ada pesan kecil dari aku hehe</p>
+
+    <button id="btn" onclick="mulaiNgetik()">klik disinii yawww</button>
+
+    <div id="pesan"></div>
+
+    <div class="signature" id="signature">
+        — dari aku, yang sekarang milik kamu 💗
+    </div>
+
+    <div class="photos">
+        <img src="foto-kiri.jpg" id="foto1">
+        <img src="foto-tengah.jpg" id="foto2">
+        <img src="foto-kanan.jpg" id="foto3">
+    </div>
+</div>
+
+<script>
+const teks = `makasiiii yaa…
+
+makasiiii banget udah nerima aku dan perasaann akuu.
+jujurrrr akuuuu bahagiaaaa passss kamuuu nerimaaa akuuuuu,rasanyaa kayaaa wowww gituuu.
+makasiii yaaa karnaaa kamuuu udaaaa mauuu nerimaaa perasaaan akuuuuu dannn ngasihh akuuu kesempatannn buattt jadiii pacarrr kamuuu anjayyy pacarrrr.
+
+akuuu tauu kedepannyaa gaa selaluuu bakalll gampanggg,
+tapiii akuuu janjiii bakalll berusahaaa jadiii orangg yanggg bikinnn kamuu nyamann,
+bukann yangg nambahhhh bebannn.
+
+akuu mauuu jalann pelannn pelannn samaaa kamuuuu,
+salingg belajarrr,
+salinggg ngertii,
+dann salingg jagaa satuuu samaaa lainnn.
+
+makasiii karnaa udaaa percayaa amaaa akuuuu,
+im happyyy bisaaa samaaaa kamuuuu 🤍`;
+
+let i = 0;
+
+function mulaiNgetik(){
+    const pesan = document.getElementById("pesan");
+    const tombol = document.getElementById("btn");
+    const music = document.getElementById("music");
+
+    music.play();
+    tombol.classList.add("hide");
+    pesan.style.display = "block";
+
+    const typing = setInterval(()=>{
+        pesan.innerHTML = teks.substring(0,i) + "<span class='cursor'>|</span>";
+        i++;
+        if(i > teks.length){
+            clearInterval(typing);
+            pesan.innerHTML = teks;
+            selesai();
+        }
+    },45);
+}
+
+function selesai(){
+    document.getElementById("signature").style.opacity = 1;
+
+    setTimeout(()=>foto1.classList.add("show"),400);
+    setTimeout(()=>foto2.classList.add("show"),900);
+    setTimeout(()=>foto3.classList.add("show"),1400);
+
+    mulaiJatuh();
+    sparkleLoop();
+}
+
+function mulaiJatuh(){
+    setInterval(()=>{
+        const item = document.createElement("div");
+        item.className = "falling";
+        item.innerHTML = ["💗","💙","🌷"][Math.floor(Math.random()*3)];
+        item.style.left = Math.random()*100 + "vw";
+        item.style.animationDuration = (3 + Math.random()*3) + "s";
+        document.body.appendChild(item);
+        setTimeout(()=>item.remove(),7000);
+    },350);
+}
+
+function sparkleLoop(){
+    setInterval(()=>{
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.left = (Math.random()*360 + window.innerWidth/2 - 180) + "px";
+        s.style.top = (window.innerHeight/2 + 120) + "px";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),2000);
+    },500);
+}
+</script>
+
+</body>
+</html>
