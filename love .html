@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>forr azariaa putrii keihann 💗</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff9ecf,#9ad0ff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.card{
+    background:#fff;
+    padding:35px;
+    border-radius:24px;
+    width:360px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+    position:relative;
+    z-index:2;
+}
+
+h2{ color:#ff4f9a; margin-bottom:6px; }
+p{ font-size:14px; color:#555; }
+
+button{
+    margin-top:15px;
+    background:linear-gradient(135deg,#ff5fa2,#6fb7ff);
+    color:#fff;
+    border:none;
+    padding:12px 26px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+#pesan{
+    margin-top:20px;
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre-line;
+    display:none;
+    color:#444;
+}
+
+.cursor{ animation:blink 1s infinite; }
+@keyframes blink{
+    0%,50%{opacity:1}
+    51%,100%{opacity:0}
+}
+
+.signature{
+    margin-top:16px;
+    font-style:italic;
+    color:#ff5fa2;
+    opacity:0;
+    transition:opacity 1.5s;
+}
+
+/* FOTO */
+.photos{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+}
+
+.photos img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:50%;
+    box-shadow:0 6px 14px rgba(0,0,0,.25);
+    opacity:0;
+    transform:translateY(20px) scale(.7);
+}
+
+/* animasi goyang manis */
+.photos img.show{
+    opacity:1;
+    animation:pop 0.6s ease forwards, wiggle 1.6s ease 0.6s;
+}
+
+@keyframes pop{
+    to{
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes wiggle{
+    0%{transform:rotate(0deg)}
+    25%{transform:rotate(5deg)}
+    50%{transform:rotate(-5deg)}
+    75%{transform:rotate(3deg)}
+    100%{transform:rotate(0deg)}
+}
+
+/* HATI JATUH */
+.falling-heart{
+    position:fixed;
+    top:-20px;
+    font-size:18px;
+    animation:fall linear forwards;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>haiii azaaaa🤍</h2>
+    <p>ada pesan dari aku hehee</p>
+
+    <button onclick="mulaiNgetik()">klik disinii yawww</button>
+
+    <div id="pesan"></div>
+
+    <div class="signature" id="signature">
+        — dari aku, yang sekarang milik kamu 💗
+    </div>
+
+    <div class="photos">
+        <img src="foto-kiri.jpg" id="foto1">
+        <img src="foto-tengah.jpg" id="foto2">
+        <img src="foto-kanan.jpg" id="foto3">
+    </div>
+</div>
+
+<script>
+const teks = `makasiiii yaa…
+
+Makasih banget udah nerima aku dan perasaanku.
+jujurrrr akuuuu bahagiaaaa passss kamuuu nerimaaa akuuuuu,rasanyaa kayaaa wowww gituuu.makasiii yaaa karnaaa udaaa kamuuu udaaaa mauuu nerimaaa perasaaan akuuuuu dannn ngasihh akuuu kesempatannn buattt jadiii pacarrr kamuuu  anjayyy pacarrrr.akuuu tauu kedepannyaa gaa selaluuu bakalll gampanggg,tapiii akuuu janjiji bakalll berusahaaa jadiii orangg yanggg bikinnn kamuu nyamann,bukann yangg nambahhhh bebannn.akuu mauuu jalann pelannn pelannn samaaa kamuuuu,salingg belajarrr,salinggg ngertii,dann salingg jagaa satuuu samaaa lainnn.akuuu gaa berharapp hubungannn yangg sempurnaaa tapiii kitaa bisaa bikinn hubungann inik jadii sempurnaaa,akuuu cumaa pengenn hubungann yangg jujurrrr dann salingg ngertiinnn.makasiii karnaa udaaa percayaa amaaa akuuuu,semogaaa mulaii darii sekrangggg,kitaa bisaaa bikinn banyakkk ceritaaa barenggg,im happyyy bisaaa samaaaa kamuuuu 🤍`;
+
+let i = 0;
+
+function mulaiNgetik(){
+    const pesan = document.getElementById("pesan");
+    const tombol = document.querySelector("button");
+
+    pesan.style.display = "block";
+    tombol.disabled = true;
+
+    const typing = setInterval(()=>{
+        pesan.innerHTML = teks.substring(0,i) + "<span class='cursor'>|</span>";
+        i++;
+        if(i > teks.length){
+            clearInterval(typing);
+            pesan.innerHTML = teks;
+            selesai();
+        }
+    },45);
+}
+
+function selesai(){
+    document.getElementById("signature").style.opacity = 1;
+
+    setTimeout(()=>foto1.classList.add("show"),400);
+    setTimeout(()=>foto2.classList.add("show"),900);
+    setTimeout(()=>foto3.classList.add("show"),1400);
+
+    mulaiHatiJatuh();
+}
+
+function mulaiHatiJatuh(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.className = "falling-heart";
+        heart.innerHTML = Math.random() > 0.5 ? "💗" : "💙";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.animationDuration = (3 + Math.random()*3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    },300);
+}
+</script>
+
+</body>
+</html>
