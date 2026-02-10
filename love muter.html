@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Heart Pink Blue Edition</title>
+    <style>
+        body {
+            /* Background gradient dari Pink ke Biru */
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #2193b0, #6dd5ed);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        /* Animasi agar background-nya terasa "hidup" */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .heart-3d {
+            position: relative;
+            width: 0;
+            height: 0;
+            transform-style: preserve-3d;
+            animation: rotateHeart 12s linear infinite;
+        }
+
+        .text-line {
+            position: absolute;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            /* Warna teks Pink cerah */
+            color: #ff007f; 
+            white-space: nowrap;
+            /* Efek glow agar teks terlihat menyala di atas gradient */
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+            transform-origin: center;
+        }
+
+        @keyframes rotateHeart {
+            0% { transform: rotateY(0deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(10deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-3d" id="heart"></div>
+
+    <script>
+        const container = document.getElementById('heart');
+        const textContent = "i loveee uuuu azaaaa"; 
+        const totalLines = 60; // Menambah kerapatan teks agar bentuk hati lebih jelas
+
+        for (let i = 0; i < totalLines; i++) {
+            const span = document.createElement('div');
+            span.className = 'text-line';
+            span.innerText = textContent;
+
+            const t = (i / totalLines) * Math.PI * 2;
+            
+            // Rumus Matematika Bentuk Hati
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            
+            const scale = 13; // Sedikit lebih besar
+            const posX = x * scale;
+            const posY = y * scale;
+            const rotationY = (i / totalLines) * 360;
+
+            span.style.transform = `translate(-50%, -50%) translate3d(${posX}px, ${posY}px, 0px) rotateY(${rotationY}deg)`;
+            
+            container.appendChild(span);
+        }
+    </script>
+</body>
+</html>
