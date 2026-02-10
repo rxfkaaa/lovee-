@@ -1,40 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>3D Heart Pink Blue Edition</title>
-    <style>
-        body {
-            /* Background gradient dari Pink ke Biru */
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #2193b0, #6dd5ed);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            perspective: 1000px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> 🤍</title>
 
-        /* Animasi agar background-nya terasa "hidup" */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffc1d9,#ffd6e7);
+    font-family:'Segoe UI',sans-serif;
+}
 
-        .heart-3d {
-            position: relative;
-            width: 0;
-            height: 0;
-            transform-style: preserve-3d;
-            animation: rotateHeart 12s linear infinite;
-        }
+.card{
+    background:white;
+    width:340px;
+    padding:26px 22px;
+    border-radius:22px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(255,105,180,0.3);
+    animation:fade 1.2s ease;
+}
 
-        .text-line {
-            position: absolute;
+h1{
+    color:#ff4f9a;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+#text{
+    font-size:15px;
+    color:#555;
+    line-height:1.7;
+    min-height:220px;
+}
+
+.footer{
+    font-size:11px;
+    color:#aaa;
+    margin-top:12px;
+}
+
+@keyframes fade{
+    from{opacity:0; transform:scale(0.9);}
+    to{opacity:1; transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>hai azaaaaa 🤍</h1>
+    <p id="text"></p>
+</div>
+
+<script>
+const message =
+"apakah kamuuu darii kemarin kemarinn betee �\n\n" +
+"or akuu adaa salahhh amaaa kamuuuu?\n\n" +
+"kaloo akuuu adaa salahhh \n\n" +
+"akuuu gaa bermaksudd gituuu maaafff yaaaaa..\n\n" +
+"cobaaa siniii ceritaaa amaaa akuuu,\n" +
+"soalnyaaa kamuuu kayaa bedaaa ajaaaa,\n" +
+"gaa kayaaa biasanyaaa 🤍";
+
+let i = 0;
+const speed = 40;
+
+function typing(){
+    if(i < message.length){
+        document.getElementById("text").innerHTML += 
+            message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+    }
+}
+
+typing();
+</script>
+
+</body>
+</html>            position: absolute;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
             font-weight: bold;
