@@ -3,86 +3,681 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> 🤍</title>
-
+<title>forr azaaa 💗</title>
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ffc1d9,#ffd6e7);
-    font-family:'Segoe UI',sans-serif;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* biar konten mulai dari atas */
+    overflow-y: auto;        /* AKTIFKAN SCROLL */
+    overflow-x: hidden;
+    padding: 40px 0;         /* jarak atas bawah */
+    background: linear-gradient(135deg, #ff9ecf, #9ad0ff);
+    position: relative;
 }
 
-.card{
-    background:white;
-    width:340px;
-    padding:26px 22px;
-    border-radius:22px;
-    text-align:center;
-    box-shadow:0 15px 30px rgba(255,105,180,0.3);
-    animation:fade 1.2s ease;
+/* BACKGROUND LAYER */
+.bg-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+.bg-layer div {
+    position: absolute;
+    font-size: 40px;
+    opacity: 0.3;
+    animation: bgMove linear infinite;
+}
+.bg-layer .layer1 { animation-duration: 120s; }
+.bg-layer .layer2 { animation-duration: 90s; }
+.bg-layer .layer3 { animation-duration: 60s; }
+@keyframes bgMove {
+    0% { transform: translateX(-150px); }
+    100% { transform: translateX(100vw); }
 }
 
-h1{
-    color:#ff4f9a;
-    font-size:22px;
-    margin-bottom:12px;
+/* FLOATING HEARTS */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+.floating-hearts div {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.2;
+    animation: floatHearts 10s linear infinite;
+}
+@keyframes floatHearts {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
 }
 
-#text{
-    font-size:15px;
-    color:#555;
-    line-height:1.7;
-    min-height:220px;
+/* LOVE TEXT - POSISI ATAS SURAT + IKUT NAIK */
+.love-text {
+    position: absolute;
+    top: -60px; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #ff4f9a;
+    opacity: 0;
+    z-index: 15;
+    text-shadow: 0 0 15px rgba(255, 79, 154, 0.8);
+    pointer-events: none;
+    font-weight: bold;
+    display: block;
 }
-
-.footer{
-    font-size:11px;
-    color:#aaa;
-    margin-top:12px;
+.love-text.active {
+    opacity: 1 !important;
+    animation: loveFloat 2s ease-in-out infinite;
 }
-
-@keyframes fade{
-    from{opacity:0; transform:scale(0.9);}
-    to{opacity:1; transform:scale(1);}
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-    <h1>hai azaaaaa 🤍</h1>
-    <p id="text"></p>
-</div>
-
-<script>
-const message =
-"apakah kamuuu darii kemarin kemarinn betee 񮡜n\n" +
-"or akuu adaa salahhh amaaa kamuuuu?\n\n" +
-"kaloo akuuu adaa salahhh \n\n" +
-"akuuu gaa bermaksudd gituuu maaafff yaaaaa..\n\n" +
-"cobaaa siniii ceritaaa amaaa akuuu,\n" +
-"soalnyaaa kamuuu kayaa bedaaa ajaaaa,\n" +
-"gaa kayaaa biasanyaaa 🤍";
-
-let i = 0;
-const speed = 40;
-
-function typing(){
-    if(i < message.length){
-        document.getElementById("text").innerHTML += 
-            message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
-        i++;
-        setTimeout(typing, speed);
+@keyframes loveFloat {
+    0% { 
+        transform: translateX(-50%) translateY(0px) scale(1); 
+        opacity: 0.8; 
+    }
+    50% { 
+        transform: translateX(-50%) translateY(-25px) scale(1.1); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateX(-50%) translateY(-15px) scale(1.05); 
+        opacity: 0.9; 
     }
 }
 
-typing();
-</script>
+/* ENVELOPE */
+.envelope {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 35px;
+    border-radius: 24px;
+    width: min(360px, 90vw);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 79, 154, 0.4);
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease;
+    cursor: pointer;
+    perspective: 1000px;
+    margin: auto;
+    max-height: none;
+}
+.envelope.show { opacity: 1; transform: scale(1); }
+.envelope:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(255, 79, 154, 0.6); }
 
+.envelope-flap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 100, 200, 0.3));
+    border-radius: 24px 24px 0 0;
+    transform-origin: top center;
+    transition: transform 1s ease;
+    z-index: 1;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+}
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg) translateY(-20px);
+}
+
+.envelope-content {
+    position: relative;
+    z-index: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.5s;
+}
+.envelope.open .envelope-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: #ff4f9a;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 79, 154, 0.5);
+}
+.seal p {
+    font-size: 14px;
+    margin: 10px 0 0 0;
+    color: #ff4f9a;
+    font-weight: bold;
+}
+.envelope.open .seal {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope.pinkGlow {
+    box-shadow: 0 0 50px rgba(255, 100, 200, 0.7), 0 0 80px rgba(255, 100, 200, 0.5) inset;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+@keyframes glow {
+    0% { box-shadow: 0 0 25px rgba(255, 100, 200, 0.5), 0 0 40px rgba(255, 100, 200, 0.3) inset; }
+    100% { box-shadow: 0 0 60px rgba(255, 100, 200, 0.8), 0 0 90px rgba(255, 100, 200, 0.6) inset; }
+}
+
+h2 {
+    color: #ff4f9a;
+    margin-bottom: 6px;
+    text-shadow: 0 0 10px rgba(255, 79, 154, 0.3);
+    font-size: 1.5em;
+}
+p { font-size: 14px; color: #555; }
+
+#pesan {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-line;
+    color: #444;
+    display: none;
+    position: relative;
+    text-shadow: 0 0 8px rgba(255, 79, 154, 0.4);
+    font-weight: 500;
+    min-height: 200px;
+}
+
+.cursor { animation: blink 1s infinite; }
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.signature {
+    margin-top: 16px;
+    font-style: italic;
+    color: #ff5fa2;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    text-shadow: 0 0 8px rgba(255, 95, 162, 0.3);
+}
+
+.photos {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.photos img {
+    width: 70px; height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.7);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.photos img.show {
+    opacity: 1;
+    animation: floatSlow 6s ease-in-out infinite;
+}
+.photos img:hover { animation: floatShake 0.8s ease-in-out infinite; }
+
+@keyframes floatSlow {
+    0% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-4px) scale(1.02); }
+    50% { transform: translateY(0) scale(1); }
+    75% { transform: translateY(4px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
+}
+@keyframes floatShake {
+    0% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(3deg) translateY(-2px); }
+    50% { transform: rotate(-3deg) translateY(2px); }
+    75% { transform: rotate(3deg) translateY(-2px); }
+    100% { transform: rotate(-3deg) translateY(2px); }
+}
+.photos img {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.photos img.active {
+    transform: scale(1.8);
+    z-index: 10;
+}
+
+.photos img.left {
+    transform: translateX(-60px) scale(0.8);
+    opacity: 0.6;
+}
+
+.photos img.right {
+    transform: translateX(60px) scale(0.8);
+    opacity: 0.6;
+}
+
+
+.falling {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    animation: fallSlow linear forwards;
+    pointer-events: none;
+}
+@keyframes fallSlow {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(var(--x, 0px), 110vh) rotate(360deg); opacity: 0; }
+}
+
+.sparkle {
+    position: fixed;
+    width: 5px; height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: spark 2s ease-out forwards;
+}
+@keyframes spark {
+    to { transform: translateY(-60px) scale(0); opacity: 0; }
+}
+
+.confetti {
+    position: fixed;
+    font-size: 30px;
+    pointer-events: none;
+    animation: confettiFall 2s linear forwards;
+}
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.heart {
+    position: fixed;
+    font-size: 25px;
+    pointer-events: none;
+    animation: heartExplode 1.5s ease-out forwards;
+}
+@keyframes heartExplode {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1.5) translateY(-150px) rotate(720deg); opacity: 0; }
+}
+
+.burst-hearts {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    opacity: 0;
+    animation: burstUp 2s ease-out forwards;
+    z-index: 3;
+}
+@keyframes burstUp {
+    0% { opacity: 0; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-50px); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-100px); }
+}
+.seal {
+    pointer-events: auto;
+    z-index: 5;
+}
+.music-control {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+.music-control:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+.music-control i {
+    font-size: 18px;
+    color: #ff5fa2;
+}
+
+@media (max-width: 480px) {
+    .envelope { padding: 24px; width: 95vw; }
+    .photos img { width: 60px; height: 60px; }
+    .falling { font-size: 18px; }
+    .confetti { font-size: 24px; }
+    .heart { font-size: 20px; }
+    .love-text { 
+        font-size: 18px; 
+        top: -50px; 
+    }
+    .seal { font-size: 30px; }
+    .seal p { font-size: 12px; }
+}
+.photos img.enlarged {
+    transform: scale(1.6);
+    z-index: 5;
+    animation: none;
+}
+    
+    #pesan {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+    
+    * {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.photos img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.photos img.enlarged {
+    box-shadow: 0 15px 30px rgba(255, 79, 154, 0.6);
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="bg-layer" id="bgLayer"></div>
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<audio id="music" src="music.mp3" loop></audio>
+<div class="envelope" id="envelope">
+    <!-- LOVE TEXT DI ATAS SURAT -->
+    <div class="love-text" id="loveText">i alwasyy love uuuu azaaaaa 💖</div>
+    
+    <div class="seal" id="seal">💖<br><p>Buka di sini</p></div>
+    <div class="envelope-flap" id="envelopeFlap"></div>
+    <div class="envelope-content" id="envelopeContent">
+        <h2>haiii cantikkkkkk 🤍</h2>
+        <p>adaa pesann kecil darii akuu hehee</p>
+        <div id="pesan"></div>
+        <div class="signature" id="signature">— by akaaa forr azaaaaa💗</div>
+        <div class="photos">
+            <img src="foto-kiri.jpg" alt="Foto kiri" id="foto1">
+            <img src="foto-tengah.jpg" alt="Foto tengah" id="foto2">
+            <img src="foto-kanan.jpg" alt="Foto kanan" id="foto3">
+        </div>
+        <div class="burst-hearts" id="burstHearts">💗💖💕</div>
+    </div>
+</div>
+
+<div class="music-control" onclick="toggleMusic()" id="musicControl">
+    <i class="fas fa-play" id="musicIcon"></i>
+</div>
+
+<script>
+const teks = `makasiiii yaa…
+makasiii yaa udaaaa mauuu jujurrrr samaaa akuuu.jujurrr sempett sediii,tapiii akuuu lebiii menghargaiii kejujurann kamuuuu daripadaaa haruss nerimaa akuu tapiiii gasepenuh hatiii.akuu ngertii koooo persaannn emanggg gabisaaa dii paksainnn,dann itu bukann salahhh kamuuuu jugaaa.
+akuuu senengggg setidaaa nyaaa akuuu udaaa beranii ngungkapinnn apaa yanggg akuu rasainnnnn dann kamuuu jugaaa udaaa ngasiii tauu jawabann kamuuu.ituuu udaaa cukupp buattt akuuu.mungkinn sekaranggg rasanyaaa agaa beratt yaaa,tapii akuuu bakall belajar nerimaaa pelann pelannn.
+tenangg ajaaa.akuuu gabakall maksaaa atauu bikinn kamuu gaaaa nyamann setelahh inii.akuuu tetepp hargainn kamuu sebagaiiii oranggg yangg baikk,dann akuuu doainn semogaaa kamuu selaluu bahagiaa,dann selaluu dii kelilingiii oranggg baikk.
+jagaaa keehatannyaaa yaaa jangannn makannn pedesss muluuuu,jangannn lupaaaa makannn nasiiii jugaaaa,sukaaa kebiasaaan kamuu ini jaranggg makannn nasiiii.
+dann kalo suatuuu hariii kamuuu kepikirannn akuuu,akuuu pengennyaa kamuuu ingettt akuuu sebagaaii oranggg yangg tulusss sayanggg samaa kamuuu,dengann caraa akuu sendiriii,bukann karnaaa akuuu nuntutt apaa apaaa,tapiii karnaaa akuuu benerannn jagaaa perasaannn kamuuu sebisaa akuuu.
+sekarangg kamuuu fokusss ajaaa samaa diriii kamuuu duluuuuu,samaa sekolaaaaa kamuuu,samaa hal hall kecilll yangg bikinn kamuuu ngerasaa tenanggg dannn happyy buatt kamuuu.akuuu dii sinii ga pergiii dengann marahhh,ga pergiii dengann benciii.akuuu pergiii sambilll belajarr nerimaaa,pelann pelannnn.
+makasiii yaaa ,buaatt semuuaa waktuuu,ceritaaa,dann perasaannn yangg sempettt kamuuu bagiinn ke akuuu.ituuu semuuaa berartiii bangett buatt akuuu,benerannn.
+tenanggg yaaa,akuuu gapapaaa.semogaa hari harii kamuuu ke depannn lebii ringannn,dann kamuuu selaluu dii temeninn samaa orang orangg baikkk 🤍
+dann makasiii jugaaa yaaa zaaa,selamaa 5 bulann iniii kamuuu udaaa jadiii rumahhhh buattt akuuu,udaaa jadii penyemangatt akuuu dii hari harii capee akuuu,udaaa jadiii alasann akuuu senyum dii banyakkk momen kecilll yangg sebenernyaa sederhanaaaa tapiii kerasa berartiii bangett karnaaa adaaa kamuuu. makasiii udaaa bikinn akuuu ngerasaa dihargaiii,ngerasa ditemeninnn,ngerasa gaa sendirii. kenangann ituuu bakalll teteppp akuuu simpen baikk baikk dii hati akuuu.andd kalo semisall kamuuu butuhh apaa apaaa chatt akuu ajaa yaa im alwayss theree forrr uuuu...
+i alwasyyy loveee uuu azaaaaa 🤍`;
+
+let i = 0;
+let isMusicPlaying = false;
+let isOpened = false;
+const envelope = document.getElementById("envelope");
+const seal = document.getElementById("seal");
+const music = document.getElementById("music");
+const pesan = document.getElementById("pesan");
+const signature = document.getElementById("signature");
+const bgLayer = document.getElementById("bgLayer");
+const floatingHearts = document.getElementById("floatingHearts");
+const loveText = document.getElementById("loveText");
+const burstHearts = document.getElementById("burstHearts");
+let isTabActive = true;
+
+document.addEventListener("visibilitychange", () => {
+    isTabActive = !document.hidden;
+
+    if (!isTabActive) {
+        music.pause();
+        isMusicPlaying = false;
+        updateMusicIcon();
+    }
+});
+
+// BACKGROUND EMOJI
+const bgEmojis = ["☁️", "💗", "🌷", "🌸", "💫","💐", "🌹"];
+for (let j = 0; j < 40; j++) {
+    const e = document.createElement("div");
+    e.innerHTML = bgEmojis[Math.floor(Math.random() * bgEmojis.length)];
+    e.style.top = Math.random() * 90 + "vh";
+    e.style.left = Math.random() * 100 + "vw";
+    e.className = "layer" + ((j % 3) + 1);
+    bgLayer.appendChild(e);
+}
+
+   let lastTouchTime = 0;
+
+seal.addEventListener("click", (e) => {
+    e.stopPropagation();
+    bukaSurat();
+});
+
+seal.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    bukaSurat();
+});
+// FLOATING HEARTS
+for (let j = 0; j < 20; j++) {
+    const h = document.createElement("div");
+    h.innerHTML = "💐";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDelay = Math.random() * 10 + "s";
+    floatingHearts.appendChild(h);
+}
+
+window.onload = () => {
+    envelope.classList.add("show");
+};
+
+function bukaSurat() {
+    if (isOpened) return;
+    isOpened = true;
+
+    envelope.classList.add("open");
+    seal.style.opacity = "0";
+    seal.style.pointerEvents = "none";
+
+    // LOVE TEXT PAKSA MUNCUL - 100% JADI
+    loveText.style.opacity = "1";
+    loveText.style.display = "block";
+    loveText.classList.add("active");
+
+    setTimeout(() => {
+        mulaiNgetik();
+    }, 300);
+}
+
+function mulaiNgetik() {
+    pesan.style.display = "block";
+    music.play();
+    isMusicPlaying = true;
+    updateMusicIcon();
+    
+    const typing = setInterval(() => {
+        pesan.innerHTML = teks.substring(0, i) + "<span class='cursor'>|</span>";
+        i++;
+        if (i > teks.length) {
+            clearInterval(typing);
+            pesan.innerHTML = teks;
+            selesai();
+        }
+    }, 40);
+}
+
+function selesai() {
+    signature.style.opacity = 1;
+    burstHearts.style.opacity = 1;
+    const fotos = [document.getElementById("foto1"), document.getElementById("foto2"), document.getElementById("foto3")];
+    fotos.forEach((f, idx) => setTimeout(() => f.classList.add("show"), 400 + 500 * idx));
+    envelope.classList.add("pinkGlow");
+
+    setTimeout(() => {
+        createFallingEmojis();
+        createConfetti();
+        createHeartExplosion();
+    }, 1000);
+}
+
+function toggleMusic() {
+    if (isMusicPlaying) {
+        music.pause();
+        isMusicPlaying = false;
+    } else {
+        music.play();
+        isMusicPlaying = true;
+    }
+    updateMusicIcon();
+}
+
+function updateMusicIcon() {
+    const icon = document.getElementById("musicIcon");
+    icon.className = isMusicPlaying ? "fas fa-pause" : "fas fa-play";
+}
+
+function createFallingEmojis() {
+    const emojis = ["💖", "🌸", "💕", "🌹", "💗", "🌷","💐"];
+    for (let j = 0; j < 15; j++) {
+        const e = document.createElement("div");
+        e.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        e.className = "falling";
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        e.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+        document.body.appendChild(e);
+        setTimeout(() => e.remove(), 5000);
+    }
+}
+
+function createConfetti() {
+    const confettiEmojis = ["🎉", "✨", "💫", "🌟"];
+    for (let j = 0; j < 20; j++) {
+        const c = document.createElement("div");
+        c.innerHTML = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.animationDuration = (Math.random() * 2 + 1) + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }
+}
+
+function createHeartExplosion() {
+    for (let j = 0; j < 10; j++) {
+        const h = document.createElement("div");
+        h.innerHTML = "💖";
+        h.className = "heart";
+        h.style.left = (Math.random() * 100) + "vw";
+        h.style.top = "80vh";
+        h.style.animationDelay = Math.random() * 0.5 + "s";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 2000);
+    }
+}
+
+envelope.addEventListener('mouseenter', () => {
+    for (let j = 0; j < 5; j++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.left = (Math.random() * 100) + "%";
+        s.style.top = (Math.random() * 100) + "%";
+        envelope.appendChild(s);
+        setTimeout(() => s.remove(), 2000);
+    }
+});
+
+let activeIndex = null;
+const photos = document.querySelectorAll(".photos img");
+
+photos.forEach((img, index) => {
+    img.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        if (activeIndex === index) {
+            photos.forEach(p => p.classList.remove("active", "left", "right"));
+            activeIndex = null;
+            return;
+        }
+
+        activeIndex = index;
+
+        photos.forEach((p, i) => {
+            p.classList.remove("active", "left", "right");
+            if (i < index) p.classList.add("left");
+            if (i > index) p.classList.add("right");
+        });
+
+        img.classList.add("active");
+    });
+});
+
+
+photos.forEach((img, index) => {
+    img.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        if (activeIndex === index) {
+            photos.forEach(p => p.classList.remove("active", "left", "right"));
+            activeIndex = null;
+            return;
+        }
+
+        activeIndex = index;
+
+        photos.forEach((p, i) => {
+            p.classList.remove("active", "left", "right");
+            if (i < index) p.classList.add("left");
+            if (i > index) p.classList.add("right");
+        });
+
+        img.classList.add("active");
+    });
+});
+
+
+window.addEventListener("pagehide", () => {
+    music.pause();
+    isMusicPlaying = false;
+});
+</script>
 </body>
 </html>
